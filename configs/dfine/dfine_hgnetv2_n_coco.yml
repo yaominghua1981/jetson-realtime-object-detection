@@ -1,0 +1,4 @@
+DFINE: {backbone: HGNetv2}
+HGNetv2: {name: B0, return_idx: [2, 3], freeze_at: -1, freeze_norm: False, use_lab: True}
+HybridEncoder: {in_channels: [512, 1024], feat_strides: [16, 32], hidden_dim: 128, use_encoder_idx: [1], dim_feedforward: 512, expansion: 0.34, depth_mult: 0.5}
+DFINETransformer: {feat_channels: [128, 128], feat_strides: [16, 32], hidden_dim: 128, dim_feedforward: 512, num_levels: 2, num_layers: 3, eval_idx: -1, num_points: [6, 6]}

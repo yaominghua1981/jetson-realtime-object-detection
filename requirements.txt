@@ -1,0 +1,12 @@
+torch>=2.0.1
+torchvision>=0.15.2
+PyYAML>=6.0
+numpy>=1.24.0
+Pillow>=10.0.0
+opencv-python>=4.7.0
+faster-coco-eval>=1.6.5
+tensorboard
+scipy
+calflops
+transformers
+loguru

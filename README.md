@@ -13,7 +13,7 @@ This project implements real-time object detection on NVIDIA Jetson platforms us
 ## Requirements
 
 - NVIDIA Jetson device (Nano, Xavier, Orin, etc.)
-- Compatible camera (USB webcam or Raspberry Pi camera)
+- Compatible camera (USB webcam or Raspberry Pi camera)，IMX219 is used in this project 
 - JetPack SDK (4.6+ recommended)
 - Python 3.6+
 
@@ -63,7 +63,7 @@ Options:
 
 For example:
 ```bash
-./camera_detection/nvgst_realtime_detect.sh --camera-id 0 --threshold 0.6
+./camera_detection/nvgst_realtime_detect.sh --camera-id 1 --threshold 0.6
 ```
 
 ### Controls

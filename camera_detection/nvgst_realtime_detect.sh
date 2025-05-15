@@ -116,7 +116,7 @@ import numpy as np
 import torch
 import threading
 import queue
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageFont
 import torchvision.transforms as T
 from collections import deque
 import glob
@@ -569,11 +569,60 @@ def main():
             cv2.imshow("D-FINE Real-time Detection", wait_img)
             cv2.waitKey(1)
             
+            # Create a separate window just for key capture
+            cv2.namedWindow("Key Control (Press q to quit, s to save)", cv2.WINDOW_NORMAL)
+            cv2.resizeWindow("Key Control (Press q to quit, s to save)", 400, 100)
+            
+            # Create a small control image
+            control_img = np.ones((100, 400, 3), dtype=np.uint8) * 50  # Dark gray
+            cv2.putText(
+                control_img,
+                "Press 'q' to quit",
+                (20, 30),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 255),
+                2
+            )
+            cv2.putText(
+                control_img,
+                "Press 's' to save current frame",
+                (20, 70),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 255),
+                2
+            )
+            cv2.imshow("Key Control (Press q to quit, s to save)", control_img)
+            
+            print("IMPORTANT: Click on the 'Key Control' window to ensure keyboard focus")
+            print("Then press 'q' to quit or 's' to save the current frame")
+            
             while running:
-                # Wait for result
+                # Always check for key press first
+                key = cv2.waitKey(30) & 0xFF
+                if key == ord('q'):
+                    print("Q key pressed, exiting...")
+                    running = False
+                    break
+                elif key == ord('s'):
+                    # Flag to save the next available frame
+                    print("S key pressed, saving current frame...")
+                    # Get the latest result if available
+                    try:
+                        if not result_queue.empty():
+                            result_frame, _ = result_queue.get(block=False)
+                            filename = f"detection_{time.strftime('%Y%m%d_%H%M%S')}.jpg"
+                            cv2.imwrite(filename, result_frame)
+                            print(f"Saved detection result: {filename}")
+                    except queue.Empty:
+                        print("No frame available to save yet")
+                
+                # Wait for result with a short timeout
                 try:
-                    result_frame, inference_time = result_queue.get(timeout=1.0)
+                    result_frame, inference_time = result_queue.get(timeout=0.1)
                 except queue.Empty:
+                    # If no new frame, continue checking for keys
                     continue
                 
                 # Update FPS calculation
@@ -612,19 +661,22 @@ def main():
                     2
                 )
                 
+                # Add instructions
+                cv2.putText(
+                    result_frame,
+                    "Use Key Control window for keyboard input",
+                    (10, height - 20),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (255, 255, 255),
+                    2
+                )
+                
                 # Display result
                 cv2.imshow("D-FINE Real-time Detection", result_frame)
-                
-                # Check for key press, press q to quit
-                key = cv2.waitKey(1) & 0xFF
-                if key == ord('q'):
-                    running = False
-                    break
-                elif key == ord('s'):
-                    # Save current frame
-                    filename = f"detection_{time.strftime('%Y%m%d_%H%M%S')}.jpg"
-                    cv2.imwrite(filename, result_frame)
-                    print(f"Saved detection result: {filename}")
+            
+            # Ensure windows close properly
+            cv2.destroyAllWindows()
             
         except Exception as e:
             print(f"Display thread error: {e}")

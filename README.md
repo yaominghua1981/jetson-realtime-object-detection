@@ -21,7 +21,7 @@ This project implements real-time object detection on NVIDIA Jetson platforms us
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/jetson-realtime-object-detection.git
+   git clone https://github.com/yaominghua1981/jetson-realtime-object-detection.git
    cd jetson-realtime-object-detection
    ```
 

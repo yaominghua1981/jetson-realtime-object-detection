@@ -1,1 +1,7 @@
 weights/*
+
+
+# Python 编译缓存文件
+*.pyc
+__pycache__/
+**/*.pyc

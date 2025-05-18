@@ -13,7 +13,13 @@ This project implements real-time object detection on NVIDIA Jetson platforms us
 ## Requirements
 
 - NVIDIA Jetson device (Nano, Xavier, Orin, etc.)
-- Compatible camera (USB webcam or Raspberry Pi camera)，IMX219 is used in this project 
+- Compatible camera:
+  - Current setup: USB 2.0 HD Camera
+    - Driver: uvcvideo
+    - Resolution: Up to 1280x720
+    - Frame rate: 30 FPS
+    - Features: Auto exposure, White balance, Brightness/Contrast control
+  - Also compatible with other USB webcams or Raspberry Pi camera
 - JetPack SDK (4.6+ recommended)
 - Python 3.6+
 

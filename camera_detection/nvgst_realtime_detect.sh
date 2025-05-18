@@ -11,11 +11,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DFINE_ROOT_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 
 # Default parameters
-MODEL_CONFIG="$DFINE_ROOT_DIR/configs/dfine/dfine_hgnetv2_n_coco.yml"
-MODEL_CHECKPOINT="$DFINE_ROOT_DIR/weights/dfine_n_coco.pth"
+MODEL_CONFIG="$DFINE_ROOT_DIR/configs/dfine/dfine_hgnetv2_x_coco.yml"
+MODEL_CHECKPOINT="$DFINE_ROOT_DIR/weights/dfine_x_coco.pth"
 DEVICE="cuda"
 THRESHOLD=0.5
-CAMERA_ID=1  # Default camera ID is 1
+CAMERA_ID=0  # Default camera ID is 0
 WIDTH=1280
 HEIGHT=720
 FPS=30
